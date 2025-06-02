@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio - Responsive Design</title>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">MyPortfolio</div>
+            <button class="mobile-menu-toggle">☰</button>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero">
+                    <div class="hero-text">
+                        <h1>Welcome to My Portfolio</h1>
+                        <p>I'm a web developer passionate about creating amazing digital experiences. Let's build something great together!</p>
+                    </div>
+                    <div class="hero-image">
+                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=300&fit=crop" alt="Web Development">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services" id="services">
+            <div class="container">
+                <h2>My Services</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <h3>Web Design</h3>
+                        <p>Creating beautiful and user-friendly website designs that capture your brand's essence and engage your audience.</p>
+                    </div>
+                    <div class="service-card">
+                        <h3>Web Development</h3>
+                        <p>Building responsive and fast websites using modern technologies and best practices for optimal performance.</p>
+                    </div>
+                    <div class="service-card">
+                        <h3>Mobile Apps</h3>
+                        <p>Developing mobile applications that provide seamless user experiences across different devices and platforms.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about" id="about">
+            <div class="container">
+                <div class="about">
+                    <div class="about-text">
+                        <h2>About Me</h2>
+                        <p>I'm a passionate web developer with 5 years of experience creating digital solutions. I love turning ideas into reality through clean, efficient code.</p>
+                        <p>When I'm not coding, you can find me exploring new technologies, reading tech blogs, or enjoying a good cup of coffee while planning my next project.</p>
+                    </div>
+                    <div class="about-image">
+                        <img src="WhatsApp Image 2025-04-03 at 8.53.14 PM.jpeg" alt="About Me">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <p>&copy; 2024 MyPortfolio. All rights reserved. | Contact: hello@myportfolio.com</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple mobile menu toggle
+        const menuToggle = document.querySelector('.mobile-menu-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+
+        menuToggle.addEventListener('click', function() {
+            navMenu.style.display = navMenu.style.display === 'none' ? 'flex' : 'none';
+        });
+
+        // Close menu when clicking on a link
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    navMenu.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
