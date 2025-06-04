@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form - JavaScript Validation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="form-title">Contact Us</h1>
+        
+        <div class="success-message" id="successMessage">
+            ✅ Thank you! Your message has been sent successfully.
+        </div>
+
+        <form id="contactForm" novalidate>
+            <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name">
+                <div class="error-message" id="nameError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email address">
+                <div class="error-message" id="emailError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Message *</label>
+                <textarea id="message" name="message" placeholder="Write your message here..."></textarea>
+                <div class="error-message" id="messageError"></div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+                Send Message
+            </button>
+        </form>
+    </div>
+
+    <script>
+        // Get form elements
+        const form = document.getElementById('contactForm');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const messageInput = document.getElementById('message');
+        const submitBtn = document.getElementById('submitBtn');
+        const successMessage = document.getElementById('successMessage');
+
+        // Get error message elements
+        const nameError = document.getElementById('nameError');
+        const emailError = document.getElementById('emailError');
+        const messageError = document.getElementById('messageError');
+
+        // Email validation regex pattern
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        // Function to show error message
+        function showError(input, errorElement, message) {
+            input.classList.add('input-error');
+            input.classList.remove('input-success');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+
+        // Function to show success state
+        function showSuccess(input, errorElement) {
+            input.classList.add('input-success');
+            input.classList.remove('input-error');
+            errorElement.style.display = 'none';
+        }
+
+        // Function to hide success message
+        function hideSuccessMessage() {
+            successMessage.style.display = 'none';
+        }
+
+        // Validate name field
+        function validateName() {
+            const nameValue = nameInput.value.trim();
+            
+            if (nameValue === '') {
+                showError(nameInput, nameError, 'Name is required');
+                return false;
+            }
+            
+            if (nameValue.length < 2) {
+                showError(nameInput, nameError, 'Name must be at least 2 characters long');
+                return false;
+            }
+            
+            if (nameValue.length > 50) {
+                showError(nameInput, nameError, 'Name must be less than 50 characters');
+                return false;
+            }
+            
+            // Check for invalid characters (only letters, spaces, hyphens, apostrophes)
+            const namePattern = /^[a-zA-Z\s\-']+$/;
+            if (!namePattern.test(nameValue)) {
+                showError(nameInput, nameError, 'Name can only contain letters, spaces, hyphens, and apostrophes');
+                return false;
+            }
+            
+            showSuccess(nameInput, nameError);
+            return true;
+        }
+
+        // Validate email field
+        function validateEmail() {
+            const emailValue = emailInput.value.trim();
+            
+            if (emailValue === '') {
+                showError(emailInput, emailError, 'Email is required');
+                return false;
+            }
+            
+            if (!emailRegex.test(emailValue)) {
+                showError(emailInput, emailError, 'Please enter a valid email address');
+                return false;
+            }
+            
+            if (emailValue.length > 100) {
+                showError(emailInput, emailError, 'Email must be less than 100 characters');
+                return false;
+            }
+            
+            showSuccess(emailInput, emailError);
+            return true;
+        }
+
+        // Validate message field
+        function validateMessage() {
+            const messageValue = messageInput.value.trim();
+            
+            if (messageValue === '') {
+                showError(messageInput, messageError, 'Message is required');
+                return false;
+            }
+            
+            if (messageValue.length < 10) {
+                showError(messageInput, messageError, 'Message must be at least 10 characters long');
+                return false;
+            }
+            
+            if (messageValue.length > 1000) {
+                showError(messageInput, messageError, 'Message must be less than 1000 characters');
+                return false;
+            }
+            
+            showSuccess(messageInput, messageError);
+            return true;
+        }
+
+        // Real-time validation as user types
+        nameInput.addEventListener('blur', validateName);
+        emailInput.addEventListener('blur', validateEmail);
+        messageInput.addEventListener('blur', validateMessage);
+
+        // Clear success message when user starts typing
+        nameInput.addEventListener('input', hideSuccessMessage);
+        emailInput.addEventListener('input', hideSuccessMessage);
+        messageInput.addEventListener('input', hideSuccessMessage);
+
+        // Handle form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+            
+            // Hide success message
+            hideSuccessMessage();
+            
+            // Validate all fields
+            const isNameValid = validateName();
+            const isEmailValid = validateEmail();
+            const isMessageValid = validateMessage();
+            
+            // Check if all validations passed
+            if (isNameValid && isEmailValid && isMessageValid) {
+                // Show loading state
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending...';
+                
+                // Simulate form submission delay
+                setTimeout(() => {
+                    // Show success message
+                    successMessage.style.display = 'block';
+                    
+                    // Reset form
+                    form.reset();
+                    
+                    // Remove validation classes
+                    nameInput.classList.remove('input-success', 'input-error');
+                    emailInput.classList.remove('input-success', 'input-error');
+                    messageInput.classList.remove('input-success', 'input-error');
+                    
+                    // Reset button
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Send Message';
+                    
+                    // Auto-hide success message after 5 seconds
+                    setTimeout(() => {
+                        hideSuccessMessage();
+                    }, 5000);
+                    
+                }, 1500);
+            }
+        });
+
+        // Add some interactive feedback
+        const inputs = [nameInput, emailInput, messageInput];
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+                this.parentElement.style.transition = 'transform 0.2s ease';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
