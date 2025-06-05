@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Data from API</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>📊 User Directory</h1>
+        
+        <div class="controls">
+            <button id="reloadBtn" class="reload-btn">🔄 Load Users</button>
+        </div>
+        
+        <div id="loadingIndicator" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            Fetching user data...
+        </div>
+        
+        <div id="errorContainer"></div>
+        <div id="usersContainer" class="users-grid"></div>
+    </div>
+    <script src="script.js"></script>
+    
+</body>
+</html>
